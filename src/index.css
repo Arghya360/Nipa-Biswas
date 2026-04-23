@@ -1,0 +1,277 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@layer base {
+  :root {
+    --background: 0 0% 6%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 72 100% 56%;
+    --primary-foreground: 0 0% 6%;
+
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 72 100% 56%;
+    --accent-foreground: 0 0% 6%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 72 100% 56%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 72 100% 56%;
+    --sidebar-primary-foreground: 0 0% 6%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 72 100% 56%;
+
+    /* Custom design tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(72 100% 56%), hsl(85 100% 45%));
+    --gradient-dark: linear-gradient(180deg, hsl(0 0% 6%), hsl(0 0% 4%));
+    --shadow-glow: 0 0 30px hsl(72 100% 56% / 0.3);
+    --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.3);
+  }
+
+  .dark {
+    --background: 0 0% 6%;
+    --foreground: 0 0% 98%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+  }
+}
+
+@layer components {
+  .section-subtitle {
+    @apply text-primary text-xs uppercase tracking-[0.2em] font-medium flex items-center gap-2;
+  }
+
+  .section-subtitle::before {
+    content: '';
+    @apply w-4 h-px bg-primary;
+  }
+
+  .highlight-text {
+    @apply text-primary italic;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+
+  .card-dark {
+    @apply bg-card border border-border rounded-lg transition-all duration-300;
+  }
+
+  .card-dark:hover {
+    @apply border-primary/30;
+    box-shadow: var(--shadow-glow);
+  }
+
+  .progress-bar-container {
+    @apply w-full h-1 bg-muted rounded-full overflow-hidden;
+  }
+
+  .progress-bar-fill {
+    @apply h-full bg-primary rounded-full transition-all duration-1000 ease-out;
+  }
+
+  .hover-lift {
+    @apply transition-transform duration-300;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-1;
+  }
+
+  .glow-effect {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .marquee {
+    animation: marquee 30s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .service-item {
+    @apply border-t border-border py-6 flex items-center justify-between gap-8 cursor-pointer transition-all duration-300;
+  }
+
+  .service-item:hover {
+    @apply border-primary/50 px-4;
+  }
+
+  .process-card {
+    @apply relative overflow-hidden rounded-lg;
+  }
+
+  .process-card::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-t from-background/90 to-transparent z-10;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Scroll-triggered text color animation */
+  .scroll-animate-text {
+    color: hsl(var(--muted-foreground));
+    transition: color 0.8s ease-in-out;
+    will-change: color;
+  }
+
+  .scroll-animate-text.is-visible {
+    color: hsl(var(--foreground));
+  }
+
+  /* Preserve primary color for highlighted text */
+  .scroll-animate-text.is-visible .text-primary,
+  .scroll-animate-text.is-visible .highlight-text,
+  .scroll-animate-text.is-visible .text-gradient {
+    color: inherit;
+  }
+
+  .scroll-animate-text .text-primary {
+    color: hsl(var(--primary)) !important;
+  }
+
+  .scroll-animate-text .highlight-text {
+    color: hsl(var(--primary)) !important;
+    font-style: italic;
+  }
+
+  .scroll-animate-text .text-gradient {
+    background-image: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+  }
+
+  /* Section animation */
+  .scroll-animate-section {
+    opacity: 0.4;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+    will-change: opacity, transform;
+  }
+
+  .scroll-animate-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Children text elements within animated sections */
+  .scroll-animate-section h1,
+  .scroll-animate-section h2,
+  .scroll-animate-section h3,
+  .scroll-animate-section h4,
+  .scroll-animate-section h5,
+  .scroll-animate-section h6 {
+    color: hsl(var(--muted-foreground));
+    transition: color 0.8s ease-in-out 0.1s;
+  }
+
+  .scroll-animate-section.is-visible h1,
+  .scroll-animate-section.is-visible h2,
+  .scroll-animate-section.is-visible h3,
+  .scroll-animate-section.is-visible h4,
+  .scroll-animate-section.is-visible h5,
+  .scroll-animate-section.is-visible h6 {
+    color: hsl(var(--foreground));
+  }
+
+  .scroll-animate-section p:not(.text-primary):not(.text-muted-foreground) {
+    color: hsl(var(--muted-foreground));
+    transition: color 0.8s ease-in-out 0.2s;
+  }
+
+  .scroll-animate-section.is-visible p:not(.text-primary):not(.text-muted-foreground) {
+    color: hsl(var(--foreground));
+  }
+
+  /* Keep muted text slightly brighter when visible */
+  .scroll-animate-section .text-muted-foreground {
+    transition: color 0.8s ease-in-out 0.15s;
+  }
+
+  .scroll-animate-section.is-visible .text-muted-foreground {
+    color: hsl(0 0% 75%);
+  }
+
+  /* Preserve primary colors */
+  .scroll-animate-section .text-primary,
+  .scroll-animate-section .highlight-text {
+    color: hsl(var(--primary)) !important;
+  }
+
+  .scroll-animate-section .text-gradient {
+    background-image: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+  }
+}
