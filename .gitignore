@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Build output (don't push dist, only source)
+dist/
+
+# Local zip
+build.zip
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.suo
+*.user
